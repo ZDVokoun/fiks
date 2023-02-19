@@ -1,0 +1,59 @@
+\documentclass{fkssolpub}
+
+\usepackage[czech]{babel}
+\usepackage{fontspec}
+
+\usepackage{fkssugar}
+ 
+\author{Ondřej Sedláček}
+\school{Gymnázium Oty Pavla} 
+\series{1}
+\problem{1} 
+
+\begin{document} 
+
+\section{Bez prkna}
+
+Pro nalezení cesty bez použití prkna stačí implementovat BFS pro graf
+definovaný tabulkou. 
+
+Protože v tomto algoritmu ukládáme informace o pláži do dvourozměrného
+pole o velikosti $n \times n$, inicializace má časovou složitost $\mathcal{O}(n^2)$.
+
+U BFS je časová asymptotická složitost $\mathcal{O}(V + E)$, tudíž
+pro určení složitosti potřebujeme zjistit počet vrcholů a hran. 
+Největší počet vrcholů může být $n^2$, protože tolik je počet buněk v
+tabulce o rozměrech $n \times n$. Dále počet hran může být nejvíc $2n(n - 1)$,
+protože $2(n - 1)$ je počet hranic oddělující jednotlivé sloupce a řádky
+a $n$ je počet hran na určité hranici sloupců či řádků. Po dosazení nám
+vyjde následující:
+
+\[
+  \mathcal{O}(V + E) = \mathcal{O}(n^2 + 2n(n - 1)) = \mathcal{O}(3n^2 - 2n)
+   = \mathcal{O}(n^2)
+\]
+
+Časová asymptotická složitost algoritmu samotného je proto kvadratická.
+
+Neboť v tomto algoritmu ukládám počet navštívených buněk a informace o 
+pláži v dvourozměrném poli, musí být celková prostorová asymptotická 
+složitost $\mathcal{O}(n^2)$.
+
+\section{S prknem}
+
+To, co by nás mohlo napadnout jako první, je to, že použijeme předchozí
+algoritmus s tím rozdílem, že ve frontě se budou ukládat taky 
+informace o možnosti použití prkna a při možnosti použití prkna 
+vstopíme na políčko s pískem. Problém je však v tom, že může dojít k 
+situaci, kdy se vlnou bez prkna uzavře vrchol a zablokuje tím průchod 
+vlnám s prknem, které by mohli jít kratší cestou. Proto musíme 
+jednotlivé navštívené vrcholy ukládat \textit{do samostatných polí} podle 
+toho, jakým typem vlny byla navštívena.
+
+Z toho můžeme rovnou zjistit, že BFS může proběhnout maximálně dvakrát a 
+navíc budeme ukládat jen další pole navštívených vrcholů. Proto jak 
+časová, tak i prostorová asymptotická složitost bude stejná, protože 
+se složitosti tohoto a předchozího algoritmu liší jen o multiplikační 
+konstantu, která se zanedbává.
+
+\end{document}

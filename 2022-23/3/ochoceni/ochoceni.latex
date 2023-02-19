@@ -1,0 +1,115 @@
+\documentclass{fkssolpub}
+
+\usepackage[czech]{babel}
+\usepackage{fontspec}
+
+\author{Ondřej Sedláček}
+\school{Gymnázium Oty Pavla} 
+\series{3}
+\problem{3} 
+
+\begin{document}
+
+\section{Pro souvislou řadu šelem}
+
+Nejdříve vyřešíme případ, kdy stojící šelmy tvoří
+souvislou řadu. Na to můžeme využít Goldbachovi
+hypotézi, která říká, že jakékoli sudé číslo větší než
+dva lze vyjádřit jako součet dvou prvočísel. Přestože
+na ní neexistuje formální důkaz, s největší 
+pravděpodobností bude do deseti milionů platit.
+
+Musíme však ukázat, že bude platit, přestože v seznamu
+prvočísel nemůžeme mít číslo dva. Na důkaz stačí jen
+ukázat, že jediné číslo, které v součtu bude mít dvojku,
+je číslo 4, protože jinak by nemohl být součet sudý.
+
+Této hypotézi můžeme využít i u lichých čísel. Z ní
+pak vyplývá, že všechna lichá čísla, které nejsou
+prvočísly, lze vyjádřit jako součet sudého čísla a
+trojky. Proto liché složené číslo lze být vyjádřeno
+jako součet tří čísel. Taky u nich nejde mít počet
+sčítanců menší, protože součet dvou lichých čísel je
+sudé číslo.
+
+Tím máme pokryté skoro všechna čísla až na 1, 2, 4.
+Tyhle čísla lze vyjádřit jako rozdíl.
+
+Číslo 2 máme už vyřešené ze zadání. Lze vyjádřit jako
+$2 = 5 - 3$, což musí být optimální řešení, jelikož
+jinak by 2 musela být povolená hlasitost, což není.
+
+Číslo 1 vyjádříme jako $1 = 7 - 3 - 3$. Důvod optimálnosti
+je stejný jako pro liché složené čísla a zároveň 1 není
+prvočíslo.
+
+Spolu s číslem 4 vyřeším první vstup. Pro něj bude
+výstup \verb|2|, protože 4 lze vyjádřit jako
+$4 = 7 - 3$.
+
+Postup je následující: nejdříve se přečte vstup a 
+spočítá se velikost souvislé řady, následně vrátíme
+\verb|2|, kdyby se jednalo o sudé číslo, jinak
+zkontrolujeme, jestli se jedná o prvočíslo. Pak
+vrátíme \verb|1|, pokud by šlo o prvočíslo, jinak
+vrátíme \verb|3|. Čtení vstupu a inicializace má
+složitost $\mathcal{O}(N)$ a kontrola, jestli se
+jedná o prvočíslo, $\mathcal{O}(\sqrt{N})$, proto
+celková časová složitost s tímto postupem je
+$\mathcal{O}(N)$.
+
+\section{Pro nesouvislou řadu šelem}
+
+Pro nesouvislou řadu stojících šelem postup výše
+nemůžeme použít. Můžeme však použít při řešení
+následující algoritmus. Souvislou řadou budu mínit
+šelmy, které jsou ve stejném stavu a zároveň jsou
+pospolu.
+
+Nejdříve přečteme vstup a z něj vytvoříme pole, které
+bude ukládat délku souvislých řad 
+(pro vstup \verb|25 26 28| to je \verb|[2, 1, 1]|).
+Při tom zjistíme vzdálenost první stojící šelmy po poslední
+stojící šelmu a po toto číslo najdeme všechna prvočísla
+pomocí Erathosthenově sítu, což bude trvat maximálně 
+$\mathcal{O}((x_N - x_1) \cdot \log (\log (x_N - x_1)))$. 
+Samozřejmě pak odstraníme dvojku ze seznamu prvočísel. 
+
+Pak pro každý prvek v seznamu ukládající délky souvislých
+řad zjistíme stejným postupem
+jako první části, kolik zařvání potřebujeme, aby
+šelmy v této řadě se postavili či sedli a aby ostatní
+šelmy zůstali ve stejném stavu. Pak během toho, co řada
+stojících šelem není souvislá, zkoušíme pro každou 
+souvislou řadu, jakým směrem a jakou hlasitostí je
+nejlepší zařvat (pro směr doprava voláme od první šelmy
+v souvislé řadě, pro směr doleva od poslední), vybereme
+ten, který nejvíce zminimalizuje počet zařvání, upravíme
+seznam a opakujeme. Tento postup má maximální složitost
+$\mathcal{O}(N^2 \cdot \pi(x_N - x_1) \log \pi(x_N - x_1))$,
+kde $\pi(n)$ je hustota prvočísel do čísla $n$.
+
+Jakmile už máme souvislou řadu, vyhodnotíme v čase
+$\mathcal{O}(\log \pi(x_N - x_1))$, kolik zařvání
+potřebujeme na posazení těchto šelem, a vrátíme
+celkový výsledek. Pokud použijeme substituci
+$a = x_N - x_1$, celkový čas je $\mathcal{O}(
+N^2 \cdot \pi(a) \log \pi(a) + a \log \log a
+)$.
+
+Tímto způsobem můžeme vyřešit druhou úlohu. Ze vstupu
+vytvoříme seznam \verb|[1, 5, 3, 6, 1]| a upravujeme
+takto:
+
+\begin{verbatim}
+[1, 5, 3, 6, 1] // od poslední šelmy doprava s hlasitostí 7
+  ->
+[1, 5, 9] // postavíme ty uprostřed
+  ->
+[15] // a máme souvislou posloupnost
+\end{verbatim}
+
+Protože 15 je liché složené číslo, výsledek druhé úlohy
+je \verb|5|.
+
+\end{document}

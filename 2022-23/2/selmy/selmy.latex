@@ -1,0 +1,106 @@
+\documentclass{fkssolpub}
+
+\usepackage[czech]{babel}
+\usepackage{fontspec}
+
+\author{Ondřej Sedláček}
+\school{Gymnázium Oty Pavla} 
+\series{2}
+\problem{1} 
+
+\begin{document}
+
+\section{První úkol}
+
+Nejdříve popíši situaci pro všechny topologie bez šelm. Když v každé z těchto
+topologií nebude ani jedna šelma, pak, jak z definice jednotlivých topologií 
+vyplývá, můžeme dojít na každý sloup skalního města. Proto pro každou z těchto topologií
+platí, že když se ve skalním městě nebude nacházet ani jedna šelma, pak
+jsme schopni úkol splnit vždycky.
+
+Dále rozeberu jednotlivé topologie s přítomností šelem. Budu předpokládat, že
+hráč, šelmy i stěžeň budou na různých sloupech.
+
+Z definice první topologie můžeme zjistit, že v první topologii je graf
+skalního města strom. Abychom dokázali, že nejsme schopni úkol splnit
+v každém případě, musíme dokázat, že po odstranění jednoho či dvou vrcholů
+grafu skalního města vzniknout nové komponenty. Protože v této topologii
+je grafem strom, stane se tak vždy, když je stupeň odstraňovaného vrcholu
+alespoň 2 (nejedná se o list). Tím jsme dokázali, že v tomto případě není
+možné úkol splnit nezávisle na rozmístění.
+
+Pokud u druhé topologie počítáme jen s jednou šelmou, pak úkol jsme schopni
+splnit vždycky, protože graf skalního města této topologie neobsahuje žádné
+artikulace. Avšak pokud jsou dvě šelmy, mohou být rozmístěny tak, že izolují
+sloup v rohu, protože tento sloup má jenom dva sousedy. Proto není možné
+pro tuto topologii a dvě šelmy splnit úkol nezávisle na rozmístění, avšak pro
+jednu šelmu to lze.
+
+U třetí topologie musíme nejdříve rozebrat malá skalní města. Skalní města
+$Q_0$ a $Q_1$ jsou tak malá, že není možné splnit předpoklad v druhém
+odstavci. Kdybychom se je tam přesto pokoušeli rozmístit, nemohli bychom v
+ani jednom případě splnit úkol. Skalní město $Q_2$ lze zařadit do druhé
+topologie, proto v tomto případě také nelze splnit úkol nezávisle na
+rozmístění. 
+
+Avšak pro skalní město $Q_3$ už je to jiné. Pro izolaci komponenty
+o jednom vrcholu musíme odstranit nejméně tři vrcholy a o dvou nebo třech vrcholech
+musíme odstranit nejméně čtyři. Z čehož vyplývá, že jedna nebo dvě šelmy
+nejsou schopny skalní město rozdělit na komponenty, proto jsme pro toto
+skalní město splnit úkol nezávisle na rozmístění. Tento závěr můžeme přenést
+i pro skalní města $Q_n$ pro $n > 2$, protože díky definici třetí topologie
+nemůže nastat, aby pro skalní město $Q_k$ bylo možné splnit úkol vždy a pro
+skalní město $Q_{k+1}$ tomu bylo naopak.
+
+\section{Druhý úkol}
+
+Začnu nejprve druhou topologií a jednou šelmou. Protože v tomto případě
+se nemůže hráč dostat do takové situace, kdy hráč se nemůže dostat do bezpečné
+vzdálenosti od šelmy, strategie hráče na utíkání je jednoduchá -- jakmile
+hráč je na sloupu vedle sloupu se šelmou, posune se na sloup, která nesousedí
+se sloupem s šelmou.
+
+Se dvěmi šelmami je to přesně naopak, šelmy hráče vždy v nějakém momentu
+dostanou. Šelmám stačí jen se dostat do polohy, kdy jedna šelma sousedí s hráčem
+a druhá sousedí s tou první šelmou a zároveň je "šikmo" na sloup s hráčem.
+Tehdy můžou hráče zatlačit do rohu a obklíčit, protože tehdy omezí pohyb hráče
+jen do dvou směrů a zároveň po pohybu hráče jsou šelmy schopny se do tohoto
+rozpoložení vrátit. Zároveň není žádná strategie pro hráče, aby znemožnil
+použití této strategie šelmami.
+
+Pro třetí topologii s jednou šelmou se to liší podle velikosti. Pro skalní
+města $Q_0$ a $Q_1$ je zřejmé, že šelma vždy vyhraje. Skalní město
+$Q_2$ odpovídá i druhé topologii, proto zde hráči stačí stejná strategie
+jako pro druhou topologii s jednou šelmou, a ve větších skalních městech
+třetí topologie taky stačí tatáž strategie, protože díky definici pro tato
+města nemůže nastat situace, kdy hráč bude obklíčen jednou šelmou.
+
+Se dvěmi šelmami se k skalním městům, kdy hráč nemůže utéct, přidá $Q_2$,
+protože $Q_2$ patří i do druhé topologie, a $Q_3$, protože šelmám stačí se
+rozmístit do takových vrcholů, jejichž hrana, kdyby existovala, by při 
+znázornění skalního města krychlí tvořila úhlopříčku krychle, aby 
+hráče obklíčili. Pro $Q_4$ však stačí hráči se pohybovat v bezpečné
+vzdálenosti od šelem, protože pro toto skalní město nemůžou šelmy hráče
+obklíčit. Tohle díky definici třetí topologie bude platit i pro větší
+skalní města této topologie.
+
+Pro čtvrtou topologii s jednou šelmou záleží na skalním městě a poloze
+šelmy, jestli hráč bude schopen utíkat do nekonečna. Pokud se ve městě
+nachází jenom cykly o třech vrcholech anebo je šelma schopna zablokovat
+přístup k větším cyklům předtím, než se tam hráč dostane, pak šelma
+může obklíčit hráče prostým přibližováním se. Pokud ale hráč má možnost
+se dostat na cyklus o alespoň čtyřech vrcholech, pak hráči stačí se vždy
+posouvat na vrchol v cyklu v bezpečné vzdálenosti od šelmy. Proto aby
+mohl hráč utíkat do nekonečna, musí platit, že se ve městě nachází
+alespoň jeden cyklus o alespoň čtyřech vrcholech a vzdálenost od hráče k
+nejbližšího takového cyklu je menší nebo rovno vzdálenosti od šelmy
+k takovému cyklu. V ostatních případech šelma vždy hráče obklíčí a vyhraje.
+
+Když jsou ale dvě šelmy, pak můžou znemožnit nekonečný útěk hráče tím,
+že po tom, co se dostanou do cyklu, se rozdělí. Proto výherní strategie
+pro šelmy je taková, že pokud se nenachází na cyklu nebo se nachází na
+spojnici cyklů, pak jdou společně, a pokud jdou procházet cyklem, pak
+se rozdělí a jakmile se dostanou rozcestí, kudy míří cesta k hráči, počkají
+na sebe. Takhle pak následují hráče do té doby, dokud ho neobklíčí.
+
+\end{document}
