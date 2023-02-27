@@ -1,0 +1,136 @@
+\documentclass{fkssolpub}
+
+\usepackage[czech]{babel}
+\usepackage{fontspec}
+\usepackage{listings}
+
+\author{Ondřej Sedláček}
+\school{Gymnázium Oty Pavla} 
+\series{4}
+\problem{2} 
+
+\lstset{
+  breaklines=true,
+  basicstyle=\ttfamily
+}
+
+\begin{document}
+
+Veškeré symboly označující funkce jsem přeoznačil písmenami od a po
+n podle toho, které z nich se v nápovědě vyskytli dříve.
+
+\section{První část}
+
+Už podle názvu a prvních rovností v první části tohoto úkolu
+lze usoudit, že znaky budou s největší pravděpodobností
+číslice. Zároveň nám na mysl může přijít domněnka, že tato čísla budou
+seřazena od nejmenšího po největší. Jak se dále dozvíme, nejlépe
+odpovídají číslice od 0 do 6.
+
+Když se podíváme na rovnosti pod číslicemi, všimneme si, že by
+mohli značit funkčních hodnot nějakých funkcí. První funkce by
+mohla být $a(x) = x$, protože vůbec nemění hodnotu daných čísel.
+U druhý pokud je první číslice tvaru X nula, pak se v této funkci
+musí příčítat konstanta, proto řešením se zdá $b(x) = x + 1$. Musíme však
+vyřešit poslední rovnost, protože tam se ze šestky stane nula.
+Z toho vyplývá, že výsledná funkce bude $b(x) = (x + 1) \, \% \, 7$.
+Podobně pak zjistíme, že $c(x) = 2x \, \% \, 7$ a 
+$d(x, y) = (y + 1) \, \% \, 7$.
+Díky těmto informacím můžeme vyřešit první nedořešenou sekci:
+
+\begin{verbatim}
+  a(a(b(4))) = 5 
+  c(0) = 0 
+  c(b(5)) = 5 
+  d(a(b(b(c(a(6))))),b(6)) = 1 
+\end{verbatim}
+
+\section{Velká instance}
+
+Tady je velmi užitečné si uvědomit několik vlatností těch funkcí,
+které se ve velké arkádě nachází. Nejprve musí platit, že koeficienty
+těch funkcí musí být nezáporná celá čísla, protože kdyby nebyla, pak by pro
+nějakou hodnotu muselo nutně vyjít takové číslo, které bychom
+nebyli jejich zápisem schopni vyjádřit. Dále se znalostí modulární
+aritmetiky můžeme zjistit, že nám stačí hledat jen koeficienty menší
+než 7.
+
+Díky těmto vlastnostem si můžeme dovolit hledat koeficienty funkcí
+hrubou silou. Postupoval jsem následujícím způsobem: nejprve jsem
+nahradil veškeré vyřešené funkce jejich funkčními hodnotami pro daný
+vstup a následně jsem substituoval z rovnic navzájem. Pak jsem si
+vybral tu funkci, pro kterou jsem díky substitucím v daném kole
+získal nejvíce funkčních hodnot, našel jsem její koeficienty a 
+pro každé nalezené $n$-tice koeficientů jsem rekurzivně spustil
+stejnou funkci (to však nakonec nebylo zapotřebí). Zde jsou níže
+nalezené funkce:
+
+\begin{verbatim}
+  e(a, b, c, d) = 5a + 0b + 3c + 4d % 7
+  f(a, b) = 5a + 1b % 7
+  g(a, b, c) = 5a + 0b + 4c % 7
+  h(a, b, c) = 2a + 2b + 4c % 7
+  i(a, b, c) = 0a + 3b + 2c % 7
+  j(a, b, c, d) = 3a + 3b + 6c + 1d % 7
+  k(a, b, c, d) = 5a + 3b + 4c + 3d % 7
+  l(a, b) = 5a + 4b % 7
+  m(a, b, c, d) = 5a + 6b + 1c + 0d % 7
+  n(a, b) = 4a + 1b % 7
+\end{verbatim}
+
+Tím už můžeme vyřešit velkou instanci:
+
+\begin{lstlisting}
+  g(g(1,6,0),f(6,n(3,5)),i(l(3,4),4,0)) = 3
+  m(5,m(f(5,3),6,f(k(3,2,4,0),6),3),l(l(4,2),5),h(f(1,5),h(2,2,5),6)) = 0
+  m(n(e(6,f(1,6),0,6),n(g(5,2,1),3)),i(3,m(l(5,2),1,0,2),i(4,k(4,0,1,5),e(5,3,5,6))),n(2,n(l(5,0),3)),m(m(5,5,0,5),j(2,3,3,1),f(5,2),0)) = 6
+  i(i(h(6,4,4),l(n(6,2),4),m(h(0,0,4),l(1,3),3,4)),1,e(j(l(6,0),1,0,i(1,2,1)),k(2,4,2,5),e(m(2,3,4,2),k(2,5,1,5),g(0,3,1),4),6)) = 5
+  l(i(k(n(0,0),6,5,2),4,f(6,5)),j(1,j(6,0,4,k(5,0,5,3)),5,1)) = 4
+  e(0,m(g(0,5,f(4,1)),j(2,k(5,0,4,3),e(2,6,6,5),0),6,g(4,4,4)),5,g(n(e(4,3,0,0),0),1,4)) = 6
+  k(i(3,1,k(h(1,1,5),j(5,6,4,4),5,5)),2,m(1,5,2,n(3,i(5,4,3))),m(3,1,5,m(e(5,1,3,0),4,h(4,3,4),6))) = 1
+  m(f(0,e(2,l(4,6),0,2)),g(3,e(0,3,e(3,4,1,6),3),n(j(4,3,1,0),5)),2,j(l(5,3),6,i(5,3,0),6)) = 3
+  k(h(2,1,1),i(1,4,i(5,n(6,1),1)),j(g(0,3,1),3,6,4),l(n(f(0,3),1),k(m(6,6,5,4),5,0,0))) = 2
+  i(g(4,2,3),i(e(0,2,3,5),4,h(0,1,4)),f(l(5,6),n(j(5,5,6,6),4))) = 0
+  h(n(h(1,2,6),2),4,k(3,4,4,e(5,j(4,4,5,6),h(3,6,4),4))) = 5
+  k(m(3,3,h(2,1,3),h(3,3,2)),m(4,g(2,1,2),f(4,5),n(4,5)),4,m(3,0,l(0,k(4,4,1,1)),l(l(1,0),4))) = 4
+  f(1,m(3,j(h(3,2,2),1,0,1),0,3)) = 4
+  f(n(m(k(0,1,5,3),0,0,1),h(g(6,4,0),1,5)),m(n(4,5),j(1,6,3,e(3,5,5,0)),m(1,5,0,2),4)) = 6
+  j(n(h(h(5,2,4),4,2),k(5,0,4,6)),i(5,m(2,i(6,1,2),n(4,4),i(5,0,1)),4),g(g(2,1,h(6,1,5)),g(i(2,3,1),2,n(5,6)),3),g(l(k(0,0,3,6),0),3,l(e(2,0,4,3),g(1,0,0)))) = 2
+  f(i(5,4,m(j(4,6,4,6),5,1,5)),l(0,5)) = 2
+  h(l(6,2),3,l(5,3)) = 6
+  m(l(0,5),l(5,i(3,l(2,0),5)),l(e(6,2,2,m(6,6,0,2)),4),f(0,4)) = 3
+  e(n(i(f(2,2),4,0),m(m(1,2,5,5),3,n(3,6),m(5,0,3,1))),n(f(6,3),1),4,h(4,2,e(4,1,5,m(2,0,2,1)))) = 6
+  f(5,4) = 1
+  k(n(2,k(4,f(5,5),6,4)),5,k(k(0,1,0,3),0,l(g(4,5,4),3),0),0) = 2
+  m(3,f(m(0,4,0,k(4,6,2,0)),3),4,k(i(5,4,g(6,3,6)),h(5,4,2),j(0,3,4,4),e(2,5,0,h(6,2,5)))) = 1
+  g(j(6,3,1,1),3,l(0,n(f(5,0),1))) = 1
+  m(3,0,j(e(6,6,4,l(3,0)),3,2,0),e(e(6,0,0,6),i(g(2,0,4),3,3),4,i(6,1,2))) = 6
+  l(l(n(4,2),i(5,i(2,0,2),h(2,4,0))),e(e(4,1,e(1,1,6,3),m(1,0,5,5)),f(0,n(0,6)),h(1,3,3),6)) = 4
+  l(0,f(l(g(1,1,2),j(3,4,2,4)),5)) = 3
+  l(f(m(3,e(5,3,0,2),2,4),2),k(n(3,2),6,j(2,5,4,n(0,6)),1)) = 6
+  i(h(e(0,k(2,5,3,2),i(5,1,4),0),2,1),k(h(3,1,0),n(4,5),5,g(g(3,1,2),3,3)),i(l(3,f(0,6)),n(2,0),1)) = 3
+  h(l(4,l(g(6,5,4),2)),k(i(5,0,4),l(6,6),5,n(1,2)),k(3,e(2,m(5,1,3,1),2,0),i(i(3,0,0),5,h(0,2,2)),l(2,j(0,2,4,2)))) = 0
+  l(i(n(6,1),j(4,6,6,3),k(3,1,1,n(3,3))),0) = 4
+  l(k(l(1,3),4,0,h(6,3,1)),2) = 4
+  h(f(6,g(4,5,2)),h(1,2,n(1,3)),h(e(3,4,3,l(1,2)),n(4,0),f(2,6))) = 0
+  n(i(j(2,6,4,6),n(3,0),n(6,0)),3) = 3
+  g(2,f(g(h(4,5,1),5,0),5),l(h(1,3,0),3)) = 1
+  j(j(e(2,2,6,k(6,0,4,4)),g(6,4,n(5,2)),6,k(h(1,1,1),4,n(2,6),5)),l(0,3),e(1,4,f(0,n(4,6)),2),g(i(4,1,k(3,3,0,5)),6,j(1,6,2,0))) = 5
+  m(1,0,4,m(f(3,3),0,4,4)) = 2
+  l(h(1,m(3,1,j(4,5,1,2),0),n(l(1,4),1)),2) = 3
+  h(g(l(m(3,1,0,3),2),j(2,5,2,e(5,2,3,1)),l(e(6,6,6,4),2)),e(0,4,i(l(0,3),0,4),k(1,1,1,1)),j(l(3,0),6,g(m(2,4,3,1),1,2),e(1,4,h(0,4,6),5))) = 1
+  l(i(1,0,0),j(j(1,5,6,5),f(5,3),k(5,6,0,e(1,6,2,6)),g(k(6,0,5,0),4,1))) = 5
+  k(4,i(4,4,1),e(5,k(4,6,m(5,2,0,4),5),e(4,3,4,1),m(2,3,6,0)),5) = 5
+  f(m(g(4,1,5),1,k(0,k(1,4,4,3),4,f(1,3)),1),k(f(1,2),l(4,5),3,e(h(6,3,4),5,f(5,2),3))) = 2
+  k(k(6,0,l(4,i(1,5,6)),h(4,0,3)),1,6,i(g(3,1,3),l(g(3,5,0),1),f(m(4,5,6,6),f(6,1)))) = 0
+  g(n(k(6,j(4,2,0,3),0,6),m(1,6,5,3)),k(6,m(5,4,5,2),5,i(5,m(1,0,3,4),5)),f(l(1,2),j(3,1,5,3))) = 6
+  f(i(5,0,3),0) = 2
+  l(k(2,n(3,i(6,3,0)),1,m(n(0,1),1,h(5,1,0),j(6,4,3,3))),3) = 0
+  g(n(k(6,3,3,f(3,1)),3),k(g(k(6,3,5,2),i(2,2,1),1),i(0,5,0),i(h(5,6,3),4,4),6),m(e(k(3,3,2,5),3,3,5),j(2,5,5,3),g(5,g(1,5,4),m(1,3,2,3)),3)) = 6
+  n(m(n(1,m(3,1,2,3)),j(2,4,m(6,3,6,3),n(3,5)),3,k(0,i(2,2,3),1,k(1,4,0,0))),e(i(3,6,6),i(6,6,l(5,5)),l(m(4,4,4,5),m(2,5,3,2)),0)) = 5
+  m(6,i(0,5,5),l(l(4,0),3),m(5,f(h(4,5,2),3),f(3,2),3)) = 5
+  f(4,e(i(0,6,j(6,1,0,0)),0,1,g(5,2,1))) = 5
+  i(f(2,5),k(l(m(6,4,2,2),6),k(1,3,n(6,2),l(1,1)),4,k(3,6,0,6)),l(5,6)) = 2
+\end{lstlisting}
+
+\end{document}
