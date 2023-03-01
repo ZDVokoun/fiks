@@ -3,6 +3,15 @@
 \usepackage[czech]{babel}
 \usepackage{fontspec}
 \usepackage{listings}
+\usepackage{color}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\lstset{
+  basicstyle=\ttfamily,
+  breaklines=true,
+  keywordstyle=\color{blue},
+  numberstyle=\color{codegray}\ttfamily,
+  numbers=left,
+  }
 
 \author{Ondřej Sedláček}
 \school{Gymnázium Oty Pavla} 
@@ -22,7 +31,7 @@ tvořit množství tuku a bílkovin jednotlivých mas, pak cenový vektor
 $\mathbf{c}$ jako seznam cen jednotlivých mas a požadované množství
 tuku a bílkovin $\mathbf{b}$.
 
-\begin{lstlisting}[Python]
+\begin{lstlisting}[language=Python]
 import numpy as np
 from scipy.optimize import linprog
 
