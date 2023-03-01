@@ -16,7 +16,7 @@ def minimize_sum_linear_equations(A, b):
     return result.x
 
 for _ in range(1000):
-    A = np.random.rand(2,100)
+    A = np.random.rand(2,1000)
     b = np.random.rand(1,2)
     
     res = minimize_sum_linear_equations(A,b)
