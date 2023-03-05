@@ -5,43 +5,11 @@
 #define ld long double
 
 using namespace std;
-const map<int, int> prob = {{1, 0}, {2, 1}, {3, 2}, {4, 3},  {5, 4},  {6, 5},
-                            {7, 6}, {8, 5}, {9, 4}, {10, 3}, {11, 2}, {12, 1}};
 
 void printArr(vector<int> v) {
   for (int i : v)
     cout << i << " ";
   cout << endl;
-}
-
-int getProb(vector<int> v) {
-  int res = 0;
-  for (int n = 2; n <= 12; n++) {
-    bool exists = false;
-    for (int i = 0; i < v.size(); i++) {
-      if (exists)
-        break;
-      if (v[i] == n) {
-        exists = true;
-        break;
-      }
-      for (int j = i + 1; j < v.size(); j++) {
-        if (v[i] + v[j] == n) {
-          exists = true;
-          break;
-        }
-      }
-    }
-    res += exists * prob.at(n) + 1;
-  }
-  return res;
-}
-
-void printProbSum(vector<int> v) {
-  int sum = 0;
-  for (int n : v)
-    sum += prob.at(n);
-  cout << sum << endl;
 }
 
 auto arMean(vector<ld> v) {
@@ -51,53 +19,6 @@ auto arMean(vector<ld> v) {
     first += n;
   }
   return (ld)first / len;
-}
-
-vector<vector<int>> tahy2(vector<int> arr, int sum) {
-  vector<vector<int>> res;
-  int bestProb = 255;
-  int bestProbb = 0;
-  for (int i = 0; i < arr.size(); ++i) {
-    if (arr[i] == sum) {
-      vector<int> nArr = arr;
-      nArr.erase(nArr.begin() + i);
-      res = {nArr};
-      // break;
-    }
-    for (int j = i + 1; j < arr.size(); ++j) {
-      if (arr[i] + arr[j] == sum) {
-        vector<int> nArr2 = arr;
-        nArr2.erase(nArr2.begin() + j);
-        nArr2.erase(nArr2.begin() + i);
-        if (bestProbb < getProb(nArr2)) {
-          bestProbb = getProb(nArr2);
-          bestProb = prob.at(arr[i]) + prob.at(arr[j]);
-          res = {nArr2};
-        } else if (bestProbb == getProb(nArr2)) {
-          if (bestProb > prob.at(arr[i]) + prob.at(arr[j])) {
-            res = {nArr2};
-            bestProb = prob.at(arr[i]) + prob.at(arr[j]);
-          }
-          // else if (bestProb == prob.at(arr[i]) + prob.at(arr[j])) {
-          //   res.push_back(nArr2);
-          // }
-        }
-        // bestProb = prob.at(arr[i]) + prob.at(arr[j]);
-        // res = {nArr2};
-        // res.push_back(nArr2);
-      }
-      // if (arr[i] + arr[j] == sum &&
-      //     bestProb > prob.at(arr[i]) + prob.at(arr[j])) {
-      //   vector<int> nArr2 = arr;
-      //   nArr2.erase(nArr2.begin() + j);
-      //   nArr2.erase(nArr2.begin() + i);
-      //   // bestProb = prob.at(arr[i]) + prob.at(arr[j]);
-      //   // res = {nArr2};
-      //   res.push_back(nArr2);
-      // }
-    }
-  }
-  return res;
 }
 
 vector<vector<int>> tahy(vector<int> arr, int sum) {

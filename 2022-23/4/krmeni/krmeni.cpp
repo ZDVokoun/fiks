@@ -15,7 +15,7 @@ struct Druh {
   int i;
 };
 
-// Porovnavaci funkce pro sort a upper_bound
+// Porovnavaci funkce pro sort a lower_bound
 bool compare(const Druh &a, const Druh &b) { return a.T / a.B > b.T / b.B; }
 
 // Funkce na reseni Gaussovou eliminaci pro matici 2x2 (par druhu masa
