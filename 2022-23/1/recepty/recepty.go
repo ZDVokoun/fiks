@@ -43,29 +43,12 @@ func task(r map[string]Recept, p map[string]Predmet) map[string]int {
 				panic("Negative")
 			}
 
-			// if k == "Wood" {
-			// 	fmt.Printf("%s %s\n", k, v)
-			// }
-			// if k == "Stick" {
-			// 	fmt.Printf("%s %s\n", k, v)
-			// }
-
 			// Kontrola potreby delat a bezet
 			if v.needed == 0 {
 				continue
 			} else {
 				run = true
 			}
-			// Kontrola prebytku
-			// if v.prebytek > 0 {
-			// 	if v.prebytek > v.needed {
-			// 		v.prebytek -= v.needed
-			// 		v.needed = 0
-			// 	} else {
-			// 		v.needed -= v.prebytek
-			// 		v.prebytek = 0
-			// 	}
-			// }
 			if recipe, ok := r[k]; ok {
 				// Vytvoreni receptu
 				if recipe.mades > v.needed {

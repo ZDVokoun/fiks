@@ -1,24 +1,17 @@
-#include <csignal>
-#include <cstdint>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <optional>
-#include <set>
-#include <thread>
-#include <vector>
+/*
+ * Abych tuhle úlohu vyřešil v dostatečně krátkém čase, musel jsem nejdříve
+ * převést tabulku na orientovaný acyklický graf, kde vrchol budou tvořit
+ * jednotlivé "rovinky" (vrcholy se stejnou nadmořskou výškou, které spolu
+ * sousedí). V ní pak najdeme nejdelší trasu, uložíme si ji, a najdeme
+ * pomocí BFS v původní tabulce nejkratší trasu, u který jsou změny
+ * nadmořských výšek stejný.
+ * */
+
+#include <bits/stdc++.h>
 
 #define sh int
 
 using namespace std;
-
-// vector<pair<int, int>> *ptr;
-
-// void signalHandler(int sig) {
-//   for (auto it : *ptr) {
-//     cout << it.first << " " << it.second;
-//   }
-// }
 
 void topologicalSortUtil(int v, const vector<set<int>> &graph,
                          vector<int> &stack, bool visited[]) {
@@ -121,21 +114,6 @@ auto task(vector<vector<int>> map, int H, int W, pair<int, int> *result) {
     (*result) = pair<int, int>(0, 0);
     return;
   }
-  // for (int i : longest)
-  //   cout << i << " ";
-  // cout << endl;
-  // for (int y = 0; y < H; y++) {
-  //   for (int x = 0; x < W; x++) {
-  //     cout << islands[y][x] << " ";
-  //   }
-  //   cout << endl;
-  // }
-  // for (auto it : paths) {
-  //   cout << it.first << " -";
-  //   for (int i : it.second)
-  //     cout << " " << i;
-  //   cout << endl;
-  // }
   int ans = INT32_MAX;
   for (int y = 0; y < H; y++) {
     for (int x = 0; x < W; x++) {
@@ -147,7 +125,6 @@ auto task(vector<vector<int>> map, int H, int W, pair<int, int> *result) {
         while (!q.empty()) {
           QueueItem cur = q.front();
           q.pop_front();
-          // cout << cur.x << " " << cur.y << endl;
           if (islands[cur.y][cur.x] == longest[longest.size() - 1]) {
             ans = min(ans, cur.len);
             continue;
@@ -175,9 +152,7 @@ auto task(vector<vector<int>> map, int H, int W, pair<int, int> *result) {
       }
     }
   }
-  // cout << longest.size() - 1 << " " << ans << endl;
   (*result) = pair<int, int>(longest.size() - 1, ans);
-  // return pair<int, int>(longest.size() - 1, ans);
 }
 
 signed main() {
@@ -185,8 +160,6 @@ signed main() {
   cin >> N;
   thread threads[N];
   vector<pair<int, int>> results(N);
-  // ptr = &results;
-  // signal(SIGABRT, signalHandler);
   for (int i = 0; i < N; i++) {
     int H, W;
     cin >> H >> W;
@@ -196,12 +169,6 @@ signed main() {
       for (int x = 0; x < W; x++)
         cin >> map[y][x];
     threads[i] = thread(task, map, H, W, &results[i]);
-    // if (partsDown < res.first ||
-    //     (partsDown == res.first && flatParts > res.second)) {
-    //   // numberOfWays = res.numberOfWays;
-    //   partsDown = res.first;
-    //   flatParts = res.second;
-    // }
   }
   for (int i = 0; i < N; i++)
     threads[i].join();

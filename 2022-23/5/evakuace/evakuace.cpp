@@ -1,6 +1,8 @@
-#include <algorithm>
+/*
+ * This is my brute-force solution which got me 1 point.
+ * */
+
 #include <bits/stdc++.h>
-#include <utility>
 
 #define mapvec map<string, vector<string>>
 #define mapset map<string, set<string>>

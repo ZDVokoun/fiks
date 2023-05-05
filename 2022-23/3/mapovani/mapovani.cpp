@@ -1,3 +1,8 @@
+/*
+ * V této úloze šlo o implementaci datové struktury trie, která přesně
+ * požadavek úlohy umožňuje splnit v lineárním čase
+ * */
+
 #include <algorithm>
 #include <iostream>
 #include <map>
